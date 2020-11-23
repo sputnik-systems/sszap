@@ -1,3 +1,3 @@
 # sszap
 
-pre-configured logger
+see examples folder
