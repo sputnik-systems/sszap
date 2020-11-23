@@ -1,0 +1,3 @@
+# sszap
+
+pre-configured logger
