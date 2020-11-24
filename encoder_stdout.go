@@ -127,7 +127,7 @@ func (enc stdoutEncoder) EncodeEntry(ent zapcore.Entry, fields []zapcore.Field) 
 			fields = append(fields, SourceLocationField(rl))
 		}
 	}
-	
+
 	return enc.internal.EncodeEntry(ent, fields)
 }
 
