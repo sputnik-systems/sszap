@@ -13,6 +13,11 @@ type loggerKey struct{}
 
 var fallbackLogger *zap.SugaredLogger
 
+func init() {
+	logger, _ := zap.NewProduction()
+	fallbackLogger = logger.Sugar()
+}
+
 func InitLogger(cores ...zapcore.Core) {
 	fallbackLogger = zap.New(zapcore.NewTee(cores...), zap.AddCaller()).Sugar()
 }
