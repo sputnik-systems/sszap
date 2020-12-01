@@ -18,8 +18,12 @@ func init() {
 	fallbackLogger = logger.Sugar()
 }
 
-func InitLogger(cores ...zapcore.Core) {
-	fallbackLogger = zap.New(zapcore.NewTee(cores...), zap.AddCaller()).Sugar()
+func SetDefaultLogger(zl *zap.SugaredLogger) {
+	fallbackLogger = zl
+}
+
+func NewLogger(cores ...zapcore.Core) *zap.SugaredLogger {
+	return zap.New(zapcore.NewTee(cores...), zap.AddCaller()).Sugar()
 }
 
 func NewPreparedStdoutCore(level string) zapcore.Core {
@@ -47,7 +51,7 @@ func parseLogLevel(level string) zapcore.Level {
 
 func NewPreparedDeviceCore(level string, ws zapcore.WriteSyncer) zapcore.Core {
 	return newDeviceEventCore(
-		newDeviceEventEncoder(newDeviceEventEncoderConfig()), 
+		zapcore.NewJSONEncoder(newDeviceEventEncoderConfig()), 
 		ws, 
 		levelEnabler(level),
 	)

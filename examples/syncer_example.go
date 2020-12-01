@@ -26,15 +26,16 @@ func (ws *eWriteSyncer) Sync() error {
 func deviceLogger() { //nolint
 	logLevel := "debug"
 
-	sszap.InitLogger(
+	logger := sszap.NewLogger(
 		sszap.NewPreparedDeviceCore(logLevel, &eWriteSyncer{}),
 	)
+	sszap.SetDefaultLogger(logger)
 
 	ctx := context.Background()
 
-	logger := sszap.FromContext(ctx)
+	ctxLogger := sszap.FromContext(ctx)
 
-	logger.With(
+	ctxLogger.With(
 		sszap.DeviceIDField("test_id"),
 	).Info("New info message")
 
