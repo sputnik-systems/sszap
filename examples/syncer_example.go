@@ -4,9 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"go.uber.org/zap/zapcore"
-
 	"github.com/sputnik-systems/sszap"
+	"go.uber.org/zap/zapcore"
 )
 
 type eWriteSyncer struct {
@@ -16,6 +15,7 @@ var _ zapcore.WriteSyncer = (*eWriteSyncer)(nil)
 
 func (ws *eWriteSyncer) Write(b []byte) (int, error) {
 	fmt.Println(string(b))
+
 	return len(b), nil
 }
 
@@ -38,5 +38,4 @@ func deviceLogger() { //nolint
 	ctxLogger.With(
 		sszap.DeviceIDField("test_id"),
 	).Info("New info message")
-
 }
