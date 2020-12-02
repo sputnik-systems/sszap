@@ -6,13 +6,10 @@ import (
 )
 
 const (
-	contextName = "api"
-
 	deviceIDKey  = "device_id"
 	eventKey     = "event"
 	eventCodeKey = "event_code"
 	dataKey      = "data"
-	contextKey   = "context"
 	sourceKey    = "source_location"
 )
 
@@ -26,10 +23,6 @@ func EventField(e string) zapcore.Field {
 
 func EventCodeField(c int) zapcore.Field {
 	return zap.Int(eventCodeKey, c)
-}
-
-func ContextField() zapcore.Field {
-	return zap.String(contextKey, contextName)
 }
 
 type SourceLocation struct {

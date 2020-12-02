@@ -158,7 +158,7 @@ func newStdoutEncoderConfig() zapcore.EncoderConfig {
 	return zapcore.EncoderConfig{
 		TimeKey:        "timestamp",
 		LevelKey:       "severity",
-		NameKey:        zapcore.OmitKey,
+		NameKey:        "context",
 		CallerKey:      zapcore.OmitKey,
 		FunctionKey:    zapcore.OmitKey,
 		MessageKey:     "text_payload",

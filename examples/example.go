@@ -9,16 +9,15 @@ import (
 func simpleLogger() { //nolint
 	logLevel := "debug"
 
-	sszap.InitLogger(
+	logger := sszap.NewLogger(
 		sszap.NewPreparedStdoutCore(logLevel),
 	)
+	sszap.SetDefaultLogger(logger.Named("test"))
 
 	ctx := context.Background()
+	ctxLogger := sszap.FromContext(ctx)
 
-	logger := sszap.FromContext(ctx)
-
-	logger.With(
+	ctxLogger.With(
 		sszap.DeviceIDField("test_id"),
 	).Info("New info message")
-
 }
