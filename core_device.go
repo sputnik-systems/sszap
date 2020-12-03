@@ -1,6 +1,8 @@
 package sszap
 
 import (
+	"fmt"
+
 	"go.uber.org/zap/zapcore"
 )
 
@@ -28,6 +30,7 @@ func (c *deviceEventCore) With(fields []zapcore.Field) zapcore.Core {
 		}
 		f.AddTo(clone.enc)
 	}
+
 	return clone
 }
 
@@ -35,24 +38,26 @@ func (c *deviceEventCore) Check(ent zapcore.Entry, ce *zapcore.CheckedEntry) *za
 	if c.Enabled(ent.Level) && c.hasDeviceEvent {
 		return ce.AddCore(ent, c)
 	}
+
 	return ce
 }
 
 func (c *deviceEventCore) Write(ent zapcore.Entry, fields []zapcore.Field) error {
 	buf, err := c.enc.EncodeEntry(ent, fields)
 	if err != nil {
-		return err
+		return fmt.Errorf("core encode error: %w", err)
 	}
 	_, err = c.out.Write(buf.Bytes())
 	buf.Free()
 	if err != nil {
-		return err
+		return fmt.Errorf("core write error: %w", err)
 	}
 	if ent.Level > zapcore.ErrorLevel {
 		// Since we may be crashing the program, sync the output. Ignore Sync
 		// errors, pending a clean solution to issue #370.
 		c.Sync() // nolint
 	}
+
 	return nil
 }
 

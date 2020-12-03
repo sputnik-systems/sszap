@@ -14,7 +14,7 @@ const (
 	HTTPRequestKey = "http_request"
 )
 
-type HttpRequest struct {
+type HTTPRequest struct {
 	RequestMethod                  string
 	RequestURL                     string
 	RequestSize                    string
@@ -32,8 +32,8 @@ type HttpRequest struct {
 	Protocol                       string
 }
 
-func (req *HttpRequest) Clone() *HttpRequest {
-	return &HttpRequest{
+func (req *HTTPRequest) Clone() *HTTPRequest {
+	return &HTTPRequest{
 		RequestMethod:                  req.RequestMethod,
 		RequestURL:                     req.RequestURL,
 		RequestSize:                    req.RequestSize,
@@ -52,7 +52,7 @@ func (req *HttpRequest) Clone() *HttpRequest {
 	}
 }
 
-func (req *HttpRequest) MarshalLogObject(enc zapcore.ObjectEncoder) error {
+func (req *HTTPRequest) MarshalLogObject(enc zapcore.ObjectEncoder) error {
 	enc.AddString("request_method", req.RequestMethod)
 	enc.AddString("request_url", req.RequestURL)
 	enc.AddString("request_size", req.RequestSize)
@@ -72,12 +72,12 @@ func (req *HttpRequest) MarshalLogObject(enc zapcore.ObjectEncoder) error {
 	return nil
 }
 
-func NewHttpRequest(req *http.Request, statusCode int, respSize int) *HttpRequest {
+func NewHTTPRequest(req *http.Request, statusCode int, respSize int) *HTTPRequest {
 	if req == nil {
 		req = &http.Request{}
 	}
 
-	r := &HttpRequest{
+	r := &HTTPRequest{
 		RequestMethod: req.Method,
 		Status:        statusCode,
 		UserAgent:     req.UserAgent(),
@@ -101,6 +101,6 @@ func NewHttpRequest(req *http.Request, statusCode int, respSize int) *HttpReques
 	return r
 }
 
-func HttpRequestField(req *HttpRequest) zap.Field {
+func HTTPRequestField(req *HTTPRequest) zap.Field {
 	return zap.Object(HTTPRequestKey, req)
 }

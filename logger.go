@@ -28,8 +28,8 @@ func NewLogger(cores ...zapcore.Core) *zap.SugaredLogger {
 
 func NewPreparedStdoutCore(level string) zapcore.Core {
 	return zapcore.NewCore(
-		newStdoutEncoder(newStdoutEncoderConfig()), 
-		zapcore.Lock(os.Stdout), 
+		newStdoutEncoder(newStdoutEncoderConfig()),
+		zapcore.Lock(os.Stdout),
 		levelEnabler(level),
 	)
 }
@@ -51,8 +51,8 @@ func parseLogLevel(level string) zapcore.Level {
 
 func NewPreparedDeviceCore(level string, ws zapcore.WriteSyncer) zapcore.Core {
 	return newDeviceEventCore(
-		zapcore.NewJSONEncoder(newDeviceEventEncoderConfig()), 
-		ws, 
+		zapcore.NewJSONEncoder(newDeviceEventEncoderConfig()),
+		ws,
 		levelEnabler(level),
 	)
 }
@@ -65,5 +65,6 @@ func FromContext(ctx context.Context) *zap.SugaredLogger {
 	if logger, ok := ctx.Value(loggerKey{}).(*zap.SugaredLogger); ok {
 		return logger
 	}
+
 	return fallbackLogger
 }
