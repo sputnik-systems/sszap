@@ -5,25 +5,7 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-const (
-	deviceIDKey  = "device_id"
-	eventKey     = "event"
-	eventCodeKey = "event_code"
-	dataKey      = "data"
-	sourceKey    = "source_location"
-)
-
-func DeviceIDField(e string) zapcore.Field {
-	return zap.String(deviceIDKey, e)
-}
-
-func EventField(e string) zapcore.Field {
-	return zap.String(eventKey, e)
-}
-
-func EventCodeField(c int) zapcore.Field {
-	return zap.Int(eventCodeKey, c)
-}
+const sourceKey = "source_location"
 
 type SourceLocation struct {
 	FilePath     string
@@ -49,27 +31,4 @@ func (sl SourceLocation) MarshalLogObject(enc zapcore.ObjectEncoder) error {
 
 func SourceLocationField(sl *SourceLocation) zapcore.Field {
 	return zap.Object(sourceKey, sl)
-}
-
-type ConnectionData struct {
-	IsOnline bool
-	Sid      string
-}
-
-func (sc *ConnectionData) Clone() *ConnectionData {
-	return &ConnectionData{
-		IsOnline: sc.IsOnline,
-		Sid:      sc.Sid,
-	}
-}
-
-func (sc *ConnectionData) MarshalLogObject(enc zapcore.ObjectEncoder) error {
-	enc.AddBool("is_online", sc.IsOnline)
-	enc.AddString("sid", sc.Sid)
-
-	return nil
-}
-
-func ConnectionDataField(sc *ConnectionData) zapcore.Field {
-	return zap.Object(dataKey, sc)
 }
