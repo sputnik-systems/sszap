@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/sputnik-systems/sszap"
+	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
@@ -27,7 +28,7 @@ func deviceLogger() { //nolint
 	logLevel := "debug"
 
 	logger := sszap.NewLogger(
-		sszap.NewPreparedDeviceCore(logLevel, &eWriteSyncer{}),
+		sszap.NewConditionalCore(logLevel, activatorField, &eWriteSyncer{}),
 	)
 	sszap.SetDefaultLogger(logger)
 
@@ -36,6 +37,13 @@ func deviceLogger() { //nolint
 	ctxLogger := sszap.FromContext(ctx)
 
 	ctxLogger.With(
-		sszap.DeviceIDField("test_id"),
+		GlobalLog(),
+		zap.String("additional", "some very important info"),
 	).Info("New info message")
+}
+
+const activatorField = "is_global"
+
+func GlobalLog() zapcore.Field {
+	return zap.Bool(activatorField, true)
 }

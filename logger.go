@@ -42,6 +42,10 @@ func levelEnabler(l string) zap.LevelEnablerFunc {
 
 func parseLogLevel(level string) zapcore.Level {
 	switch strings.ToLower(level) {
+	case zapcore.ErrorLevel.String():
+		return zapcore.ErrorLevel
+	case zapcore.WarnLevel.String():
+		return zapcore.WarnLevel
 	case zapcore.DebugLevel.String():
 		return zapcore.DebugLevel
 	default:
@@ -49,11 +53,12 @@ func parseLogLevel(level string) zapcore.Level {
 	}
 }
 
-func NewPreparedDeviceCore(level string, ws zapcore.WriteSyncer) zapcore.Core {
-	return newDeviceEventCore(
-		zapcore.NewJSONEncoder(newDeviceEventEncoderConfig()),
+func NewConditionalCore(level, activator string, ws zapcore.WriteSyncer) zapcore.Core {
+	return newConditionalCore(
+		zapcore.NewJSONEncoder(newStdoutEncoderConfig()),
 		ws,
 		levelEnabler(level),
+		activator,
 	)
 }
 

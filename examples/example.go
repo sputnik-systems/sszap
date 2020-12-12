@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/sputnik-systems/sszap"
+	"go.uber.org/zap"
 )
 
 func simpleLogger() { //nolint
@@ -18,6 +19,6 @@ func simpleLogger() { //nolint
 	ctxLogger := sszap.FromContext(ctx)
 
 	ctxLogger.With(
-		sszap.DeviceIDField("test_id"),
+		zap.String("test_field", "test_value"),
 	).Info("New info message")
 }
