@@ -1,10 +1,8 @@
 package sszap
 
 import (
-	"bytes"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"io"
 )
 
 const (
@@ -23,12 +21,6 @@ func DeviceIDField(e string) zapcore.Field {
 
 func FunctionName(e string) zapcore.Field {
 	return zap.String(functionName, e)
-}
-
-func RequestBody(e io.ReadCloser) zapcore.Field {
-	buf := new(bytes.Buffer)
-	buf.ReadFrom(e)
-	return zap.String(dataBody, buf.String())
 }
 
 func EventField(e string) zapcore.Field {
