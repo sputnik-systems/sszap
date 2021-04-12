@@ -6,12 +6,13 @@ import (
 )
 
 const (
-	deviceIDKey  = "device_id"
-	eventKey     = "event"
-	eventCodeKey = "event_code"
-	dataKey      = "data"
-	sourceKey    = "source_location"
-	functionName = "function_name"
+	deviceIDKey     = "device_id"
+	eventKey        = "event"
+	eventCodeKey    = "event_code"
+	dataKey         = "data"
+	sourceKey       = "source_location"
+	functionNameKey = "function_name"
+	bodyDataKey     = "bodyData"
 )
 
 func DeviceIDField(e string) zapcore.Field {
@@ -19,11 +20,15 @@ func DeviceIDField(e string) zapcore.Field {
 }
 
 func FunctionName(e string) zapcore.Field {
-	return zap.String(functionName, e)
+	return zap.String(functionNameKey, e)
 }
 
 func EventField(e string) zapcore.Field {
 	return zap.String(eventKey, e)
+}
+
+func BodyData(e interface{}) zapcore.Field {
+	return zap.Any(bodyDataKey, e)
 }
 
 func EventCodeField(c int) zapcore.Field {
