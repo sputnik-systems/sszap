@@ -12,7 +12,6 @@ const (
 	dataKey      = "data"
 	sourceKey    = "source_location"
 	functionName = "function_name"
-	dataBody     = "data_body"
 )
 
 func DeviceIDField(e string) zapcore.Field {
