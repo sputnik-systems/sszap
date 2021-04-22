@@ -7,6 +7,7 @@ import (
 
 const (
 	deviceIDKey     = "device_id"
+	nodeIDKey       = "node_id"
 	eventKey        = "event"
 	eventCodeKey    = "event_code"
 	dataKey         = "data"
@@ -17,6 +18,10 @@ const (
 
 func DeviceIDField(e string) zapcore.Field {
 	return zap.String(deviceIDKey, e)
+}
+
+func NodeIDField(e string) zapcore.Field {
+	return zap.String(nodeIDKey, e)
 }
 
 func FunctionName(e string) zapcore.Field {
