@@ -19,6 +19,7 @@ func simpleLogger() { //nolint
 
 	logger.With(
 		sszap.DeviceIDField("test_id"),
+		sszap.NodeIDField("test_node_id"),
 	).Info("New info message")
 
 }

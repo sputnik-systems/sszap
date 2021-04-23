@@ -9,12 +9,17 @@ const (
 	contextName = "api"
 
 	deviceIDKey  = "device_id"
+	nodeIDKey    = "node_id"
 	eventKey     = "event"
 	eventCodeKey = "event_code"
 	dataKey      = "data"
 	contextKey   = "context"
 	sourceKey    = "source_location"
 )
+
+func NodeIDField(e string) zapcore.Field {
+	return zap.String(nodeIDKey, e)
+}
 
 func DeviceIDField(e string) zapcore.Field {
 	return zap.String(deviceIDKey, e)
