@@ -5,6 +5,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/go-chi/chi/middleware"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -63,6 +64,7 @@ func WithLogger(ctx context.Context, logger *zap.SugaredLogger) context.Context 
 
 func FromContext(ctx context.Context) *zap.SugaredLogger {
 	if logger, ok := ctx.Value(loggerKey{}).(*zap.SugaredLogger); ok {
+		logger.With("requestID", middleware.GetReqID(ctx))
 		return logger
 	}
 

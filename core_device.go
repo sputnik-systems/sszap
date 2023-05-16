@@ -55,7 +55,7 @@ func (c *deviceEventCore) Write(ent zapcore.Entry, fields []zapcore.Field) error
 	if ent.Level > zapcore.ErrorLevel {
 		// Since we may be crashing the program, sync the output. Ignore Sync
 		// errors, pending a clean solution to issue #370.
-		c.Sync() // nolint
+		c.Sync() //nolint
 	}
 
 	return nil
