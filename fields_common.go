@@ -6,6 +6,7 @@ import (
 )
 
 const (
+	requestIDKey    = "request_id"
 	deviceIDKey     = "device_id"
 	nodeIDKey       = "node_id"
 	contextKey      = "context"
@@ -14,11 +15,15 @@ const (
 	dataKey         = "data"
 	sourceKey       = "source_location"
 	functionNameKey = "function_name"
-	bodyDataKey     = "bodyData"
+	bodyDataKey     = "body_data"
 )
 
 func DeviceIDField(e string) zapcore.Field {
 	return zap.String(deviceIDKey, e)
+}
+
+func RequestIDField(e string) zapcore.Field {
+	return zap.String(requestIDKey, e)
 }
 
 func NodeIDField(e string) zapcore.Field {
